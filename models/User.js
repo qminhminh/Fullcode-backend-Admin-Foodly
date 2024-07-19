@@ -14,8 +14,8 @@ const UserSchema = new mongoose.Schema({
         ref: "Address",
         required: false,
     },
-    userType: {type: String, required: true, default: "Client", enum: ['Client', 'Admin', 'Vendor', 'Driver']},
-    profile: {type: String, default: 'https://d326fntlu7tb1e.cloudfront.net/uploads/bdec9d7d-0544-4fc4-823d-3b898f6dbbbf-vinci_03.jpeg'}
+    userType: {type: String, required: true, default: "Admin", enum: ['Client', 'Admin', 'Vendor', 'Driver']},
+    profile: {type: String, default: 'https://res.cloudinary.com/dp2bicmif/image/upload/v1721315877/logo_hrsyqx.png'}
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', UserSchema);

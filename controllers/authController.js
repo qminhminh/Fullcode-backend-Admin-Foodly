@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const CryptoJS = require('crypto-js');
+const CryptoJS = require("crypto-js");
 const jwt = require('jsonwebtoken');
 const generateOtp = require('../utils/otp_generator');
 const sendMail = require("../utils/smtp_function");
@@ -41,6 +41,7 @@ module.exports = {
             
            // SEND OTP TO EMAIL
            sendMail(newUser.email, newUser.username, newUser.otp);
+           console.log(otp.toString());
 
            res.status(201).json({status: true, message: "User successfully created."}); 
         } catch (error) {
@@ -66,7 +67,7 @@ module.exports = {
 
         try {
             const user = await User.findOne({email: req.body.email});
-
+             
             if(!user){
                 return res.status(400).json({status: false, message: "User not found"});
             }
@@ -77,7 +78,7 @@ module.exports = {
 
             const decryptedPassword = CryptoJS.AES.decrypt(user.password, process.env.SECRET);
             const depassword = decryptedPassword.toString(CryptoJS.enc.Utf8);
-
+            
             if(depassword !== req.body.password){
                 return res.status(400).json({status: false, message: "Wrong Password"}); 
             }
@@ -93,6 +94,7 @@ module.exports = {
             res.status(200).json({...others, userToken});
       
         } catch (error) {
+            console.log(error.message);
            res.status(500).json({status: false, message: error.message}); 
         }
     },

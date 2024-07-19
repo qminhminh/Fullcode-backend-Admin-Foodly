@@ -14,7 +14,7 @@ const driverSchema = new mongoose.Schema({
     verificationMessage: {type: String, default: "Please allow up to 24 hours for your verification to be processed. You will receive a notification once your verification is complete."},
     rating: { type: Number, min: 1, max: 5, default: 3},
     totalDeliveries: { type: Number, default: 0 },
-    profileImage: {type:String, default: "https://d326fntlu7tb1e.cloudfront.net/uploads/cf503f8d-3318-4306-9e2c-a53efb7d585b-avatar.png"},
+    profileImage: {type:String, default: "https://res.cloudinary.com/dp2bicmif/image/upload/v1721362279/download_sqbodu.png"},
     isActive: { type: Boolean, default: false } // To track if the driver is currently active on the platform
 });
 
