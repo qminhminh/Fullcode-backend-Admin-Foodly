@@ -98,7 +98,81 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ status: false, message: error.message });
         }
-     }
+     },
+     updateProfileAdmin: async (req, res) => {
+        const { id, name, phone, status, image, gender, birthday } = req.body; // corrected "birthay" to "birthday"
+    
+        try {
+            // Check if the profile exists
+            const existingProfile = await Profile.findOne({ userID: id });
+            
+            if (!existingProfile) {
+                // Create a new profile if it doesn't exist
+                const newProfile = new Profile({
+                    userID: id,
+                    username: name,
+                    status: status,
+                    phone: phone,
+                    profile: image,
+                    gender: gender,
+                    birthday: birthday
+                });
+                await newProfile.save();
+
+                await User.findByIdAndUpdate(
+                    id, // Directly use the user ID
+                    {
+                        profile: image, // Ensure 'profile' is the correct field name you want to update
+                    },
+                    { new: true } // Return the updated profile
+                );
+                
+                return res.status(200).json(newProfile); // Return the newly created profile
+            } else {
+                // Update the existing profile
+                const updatedProfile = await Profile.findOneAndUpdate(
+                    { userID: id },
+                    {
+                        username: name,
+                        status: status,
+                        phone: phone,
+                        profile: image,
+                        gender: gender,
+                        birthday: birthday
+                    },
+                    { new: true } // Return the updated profile
+                );
+
+                await User.findByIdAndUpdate(
+                    id, // Directly use the user ID
+                    {
+                        profile: image, // Ensure 'profile' is the correct field name you want to update
+                    },
+                    { new: true } // Return the updated profile
+                );
+                return res.status(200).json(updatedProfile); // Return the updated profile
+            }
+        } catch (error) {
+            console.error(error); // Log the error for debugging
+            return res.status(500).json({ message: 'Internal Server Error', error }); // Return a generic error message
+        }
+    },
+    getProfileAdmin: async (req, res) => {
+        const id = req.params.id;
+    
+        try {
+            // Check if the profile exists
+            const profile = await Profile.findOne({ userID: id });
+            
+            if (profile) {
+                return res.status(200).json({ profile: profile }); 
+                
+            }
+        } catch (error) {
+            console.error(error); // Log the error for debugging
+            return res.status(500).json({ message: 'Internal Server Error', error }); // Return a generic error message
+        }
+    },
 
 
 }

@@ -11,4 +11,8 @@ router.get("/all-users", userController.getUsers);
 
 router.put("/updateToken/:token",verifyTokenAndAuthorization, userController.updateFcm);
 
+router.post("/update-profile-admin", userController.updateProfileAdmin);
+
+router.get("/get-profile-admin/:id", userController.getProfileAdmin);
+
 module.exports = router;
