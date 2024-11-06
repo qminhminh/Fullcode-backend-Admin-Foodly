@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+     "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +20,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
     "morgan": "^1.10.0",
-    "nodemailer": "^6.9.14",
-    "nodemon": "^3.1.4"
+    "nodemailer": "^6.9.14"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": ">=16.x"
   }
 }
